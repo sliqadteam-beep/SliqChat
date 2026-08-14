@@ -1,0 +1,210 @@
+﻿<div class="language-menu">
+    <button class="language-button" onclick="toggleLanguageMenu()">
+        <span class="language-icon">文</span>
+        <span id="currentLanguage">Deutsch</span>
+        <span class="language-arrow">⌃</span>
+    </button>
+
+    <div class="language-dropdown" id="languageDropdown">
+        <div class="language-title">Sprache auswählen</div>
+
+        <button onclick="changeLanguage('de','Deutsch')">Deutsch</button>
+        <button onclick="changeLanguage('en','English')">English</button>
+        <button onclick="changeLanguage('es','Español')">Español</button>
+        <button onclick="changeLanguage('fr','Français')">Français</button>
+        <button onclick="changeLanguage('it','Italiano')">Italiano</button>
+        <button onclick="changeLanguage('pt','Português')">Português</button>
+        <button onclick="changeLanguage('tr','Türkçe')">Türkçe</button>
+        <button onclick="changeLanguage('pl','Polski')">Polski</button>
+        <button onclick="changeLanguage('nl','Nederlands')">Nederlands</button>
+        <button onclick="changeLanguage('sv','Svenska')">Svenska</button>
+        <button onclick="changeLanguage('da','Dansk')">Dansk</button>
+        <button onclick="changeLanguage('no','Norsk')">Norsk</button>
+        <button onclick="changeLanguage('fi','Suomi')">Suomi</button>
+        <button onclick="changeLanguage('cs','Čeština')">Čeština</button>
+        <button onclick="changeLanguage('uk','Українська')">Українська</button>
+        <button onclick="changeLanguage('ru','Русский')">Русский</button>
+        <button onclick="changeLanguage('ar','العربية')">العربية</button>
+        <button onclick="changeLanguage('zh','中文')">中文</button>
+        <button onclick="changeLanguage('ja','日本語')">日本語</button>
+        <button onclick="changeLanguage('ko','한국어')">한국어</button>
+    </div>
+</div>
+
+<style>
+.language-menu {
+    position:fixed;
+    right:22px;
+    bottom:22px;
+    z-index:99999;
+    font-family:Inter,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+}
+
+.language-button {
+    height:44px;
+    min-width:145px;
+    padding:0 14px;
+    display:flex;
+    align-items:center;
+    gap:9px;
+    border:1px solid rgba(255,255,255,.1);
+    border-radius:13px;
+    background:rgba(13,21,36,.9);
+    color:#e5edf8;
+    backdrop-filter:blur(20px);
+    box-shadow:0 12px 35px rgba(0,0,0,.35);
+    cursor:pointer;
+    transition:.2s ease;
+}
+
+.language-button:hover {
+    transform:translateY(-2px);
+    border-color:rgba(59,130,246,.5);
+}
+
+.language-icon {
+    width:23px;
+    height:23px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    border-radius:7px;
+    background:rgba(59,130,246,.15);
+    color:#60a5fa;
+    font-size:13px;
+    font-weight:700;
+}
+
+#currentLanguage {
+    flex:1;
+    text-align:left;
+    font-size:12px;
+    font-weight:600;
+}
+
+.language-arrow {
+    transition:.25s ease;
+}
+
+.language-dropdown {
+    position:absolute;
+    right:0;
+    bottom:53px;
+    width:190px;
+    max-height:330px;
+    overflow-y:auto;
+    padding:7px;
+    border:1px solid rgba(255,255,255,.09);
+    border-radius:15px;
+    background:rgba(10,17,30,.97);
+    backdrop-filter:blur(25px);
+    box-shadow:0 20px 60px rgba(0,0,0,.5);
+    opacity:0;
+    visibility:hidden;
+    transform:translateY(10px) scale(.97);
+    transition:.2s ease;
+}
+
+.language-dropdown.open {
+    opacity:1;
+    visibility:visible;
+    transform:translateY(0) scale(1);
+}
+
+.language-title {
+    padding:9px 10px 7px;
+    color:#718096;
+    font-size:10px;
+    font-weight:700;
+    text-transform:uppercase;
+    letter-spacing:.7px;
+}
+
+.language-dropdown button {
+    width:100%;
+    height:37px;
+    padding:0 11px;
+    border:0;
+    border-radius:9px;
+    background:transparent;
+    color:#cbd5e1;
+    text-align:left;
+    font-size:12px;
+    cursor:pointer;
+    transition:.15s ease;
+}
+
+.language-dropdown button:hover {
+    background:rgba(59,130,246,.12);
+    color:white;
+    padding-left:15px;
+}
+
+.language-dropdown::-webkit-scrollbar {
+    width:5px;
+}
+
+.language-dropdown::-webkit-scrollbar-thumb {
+    background:rgba(96,165,250,.35);
+    border-radius:10px;
+}
+
+@media(max-width:600px) {
+    .language-menu {
+        right:14px;
+        bottom:14px;
+    }
+
+    .language-button {
+        min-width:130px;
+    }
+
+    .language-dropdown {
+        width:180px;
+        max-height:280px;
+    }
+}
+</style>
+
+<script>
+function toggleLanguageMenu() {
+    const menu=document.getElementById("languageDropdown");
+    const arrow=document.querySelector(".language-arrow");
+
+    menu.classList.toggle("open");
+
+    arrow.style.transform=menu.classList.contains("open")
+        ? "rotate(180deg)"
+        : "rotate(0deg)";
+}
+
+function changeLanguage(code,name) {
+    localStorage.setItem("sliqchat_language",code);
+    localStorage.setItem("sliqchat_language_name",name);
+
+    document.getElementById("currentLanguage").textContent=name;
+    document.documentElement.lang=code;
+
+    document.getElementById("languageDropdown").classList.remove("open");
+    document.querySelector(".language-arrow").style.transform="rotate(0deg)";
+}
+
+document.addEventListener("DOMContentLoaded",function() {
+    const code=localStorage.getItem("sliqchat_language");
+    const name=localStorage.getItem("sliqchat_language_name");
+
+    if(code && name) {
+        document.getElementById("currentLanguage").textContent=name;
+        document.documentElement.lang=code;
+    }
+});
+
+document.addEventListener("click",function(event) {
+    const menu=document.querySelector(".language-menu");
+
+    if(menu && !menu.contains(event.target)) {
+        document.getElementById("languageDropdown").classList.remove("open");
+        document.querySelector(".language-arrow").style.transform="rotate(0deg)";
+    }
+});
+</script>
