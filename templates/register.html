@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SliqChat - Registrierung</title>
+
+    <style>
+        body {
+            margin: 0;
+            background: #111827;
+            color: white;
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .box {
+            background: #1f2937;
+            padding: 35px;
+            border-radius: 15px;
+            width: 320px;
+        }
+
+        h1, h2 {
+            text-align: center;
+        }
+
+        input {
+            width: 100%;
+            box-sizing: border-box;
+            padding: 13px;
+            margin: 8px 0;
+            border: none;
+            border-radius: 8px;
+            background: #374151;
+            color: white;
+        }
+
+        button {
+            width: 100%;
+            padding: 13px;
+            border: none;
+            border-radius: 8px;
+            background: #2563eb;
+            color: white;
+            font-size: 16px;
+            cursor: pointer;
+            margin-top: 5px;
+        }
+
+        a {
+            color: #60a5fa;
+        }
+
+        .error {
+            color: #f87171;
+            text-align: center;
+        }
+
+        .center {
+            text-align: center;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="box">
+
+    <h1>💬 SliqChat</h1>
+
+    <h2>Account erstellen</h2>
+
+    {% if error %}
+        <p class="error">{{ error }}</p>
+    {% endif %}
+
+    <form method="POST">
+
+        <input
+            type="text"
+            name="username"
+            placeholder="Benutzername"
+            required
+        >
+
+        <input
+            type="password"
+            name="password"
+            placeholder="Passwort"
+            required
+        >
+
+        <button type="submit">
+            Account erstellen
+        </button>
+
+    </form>
+
+    <p class="center">
+        Bereits einen Account?
+        <a href="/login">Einloggen</a>
+    </p>
+
+</div>
+
+</body>
+</html>
