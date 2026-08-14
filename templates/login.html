@@ -1,111 +1,872 @@
 <!DOCTYPE html>
 <html lang="de">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SliqChat - Login</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <style>
-        body {
-            margin: 0;
-            background: #111827;
-            color: white;
-            font-family: Arial, sans-serif;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-        }
+<title>SliqChat – Login</title>
 
-        .box {
-            background: #1f2937;
-            padding: 35px;
-            border-radius: 15px;
-            width: 320px;
-        }
+<style>
 
-        h1, h2 {
-            text-align: center;
-        }
+* {
+    box-sizing: border-box;
+}
 
-        input {
-            width: 100%;
-            box-sizing: border-box;
-            padding: 13px;
-            margin: 8px 0;
-            border: none;
-            border-radius: 8px;
-            background: #374151;
-            color: white;
-        }
+:root {
+    --blue: #3b82f6;
+    --blue-dark: #2563eb;
+    --bg: #050914;
+    --card: rgba(13, 21, 36, .82);
+    --border: rgba(255,255,255,.08);
+    --text: #f8fafc;
+    --muted: #8491a5;
+}
 
-        button {
-            width: 100%;
-            padding: 13px;
-            border: none;
-            border-radius: 8px;
-            background: #2563eb;
-            color: white;
-            font-size: 16px;
-            cursor: pointer;
-            margin-top: 5px;
-        }
+html,
+body {
+    margin: 0;
+    width: 100%;
+    height: 100%;
+}
 
-        a {
-            color: #60a5fa;
-        }
+body {
+    font-family:
+        Inter,
+        -apple-system,
+        BlinkMacSystemFont,
+        "Segoe UI",
+        Arial,
+        sans-serif;
 
-        .error {
-            color: #f87171;
-            text-align: center;
-        }
+    background:
+        radial-gradient(
+            circle at 15% 20%,
+            rgba(59,130,246,.18),
+            transparent 30%
+        ),
+        radial-gradient(
+            circle at 85% 80%,
+            rgba(37,99,235,.14),
+            transparent 30%
+        ),
+        var(--bg);
 
-        .center {
-            text-align: center;
-        }
-    </style>
+    color: var(--text);
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    overflow: hidden;
+}
+
+
+/* BACKGROUND */
+
+.background {
+    position: fixed;
+    inset: 0;
+
+    pointer-events: none;
+}
+
+.glow {
+    position: absolute;
+
+    width: 350px;
+    height: 350px;
+
+    border-radius: 50%;
+
+    filter: blur(80px);
+
+    opacity: .18;
+
+    animation:
+        float 8s ease-in-out infinite;
+}
+
+.glow.one {
+    background: #2563eb;
+
+    left: -100px;
+    top: -100px;
+}
+
+.glow.two {
+    background: #6366f1;
+
+    right: -100px;
+    bottom: -100px;
+
+    animation-delay: -4s;
+}
+
+@keyframes float {
+
+    0%,
+    100% {
+        transform: translate(
+            0,
+            0
+        );
+    }
+
+    50% {
+        transform: translate(
+            30px,
+            -25px
+        );
+    }
+}
+
+
+/* PARTICLES */
+
+.particles {
+    position: fixed;
+    inset: 0;
+
+    pointer-events: none;
+}
+
+.particle {
+    position: absolute;
+
+    width: 3px;
+    height: 3px;
+
+    border-radius: 50%;
+
+    background: #60a5fa;
+
+    opacity: .25;
+
+    animation:
+        particleFloat
+        linear infinite;
+}
+
+@keyframes particleFloat {
+
+    from {
+        transform:
+            translateY(100vh);
+    }
+
+    to {
+        transform:
+            translateY(-20px);
+    }
+}
+
+
+/* CONTAINER */
+
+.container {
+
+    width: 100%;
+    max-width: 430px;
+
+    padding: 20px;
+
+    position: relative;
+
+    z-index: 2;
+
+    animation:
+        pageIn .65s
+        cubic-bezier(.2,.8,.2,1);
+}
+
+@keyframes pageIn {
+
+    from {
+        opacity: 0;
+
+        transform:
+            translateY(25px)
+            scale(.97);
+    }
+
+    to {
+        opacity: 1;
+
+        transform:
+            translateY(0)
+            scale(1);
+    }
+}
+
+
+/* CARD */
+
+.card {
+
+    padding: 38px;
+
+    border-radius: 25px;
+
+    background:
+        var(--card);
+
+    border:
+        1px solid var(--border);
+
+    box-shadow:
+        0 30px 90px
+        rgba(0,0,0,.45);
+
+    backdrop-filter:
+        blur(25px);
+
+    position: relative;
+
+    overflow: hidden;
+}
+
+.card::before {
+
+    content: "";
+
+    position: absolute;
+
+    top: 0;
+    left: 10%;
+
+    width: 80%;
+    height: 1px;
+
+    background:
+        linear-gradient(
+            90deg,
+            transparent,
+            rgba(96,165,250,.8),
+            transparent
+        );
+
+    animation:
+        shine 4s ease-in-out infinite;
+}
+
+@keyframes shine {
+
+    0%,
+    100% {
+        opacity: .25;
+    }
+
+    50% {
+        opacity: 1;
+    }
+}
+
+
+/* LOGO */
+
+.logo {
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    margin-bottom: 28px;
+}
+
+.logo-icon {
+
+    width: 52px;
+    height: 52px;
+
+    border-radius: 15px;
+
+    background:
+        linear-gradient(
+            135deg,
+            #60a5fa,
+            #2563eb
+        );
+
+    position: relative;
+
+    box-shadow:
+        0 12px 35px
+        rgba(37,99,235,.35);
+
+    animation:
+        logoFloat
+        3s ease-in-out infinite;
+}
+
+@keyframes logoFloat {
+
+    0%,
+    100% {
+        transform:
+            translateY(0);
+    }
+
+    50% {
+        transform:
+            translateY(-5px);
+    }
+}
+
+.logo-icon::before {
+
+    content: "";
+
+    position: absolute;
+
+    width: 22px;
+    height: 17px;
+
+    background: white;
+
+    border-radius: 6px;
+
+    top: 16px;
+    left: 15px;
+}
+
+.logo-icon::after {
+
+    content: "";
+
+    position: absolute;
+
+    width: 8px;
+    height: 8px;
+
+    background: white;
+
+    transform: rotate(45deg);
+
+    bottom: 12px;
+    left: 13px;
+}
+
+
+/* TEXT */
+
+h1 {
+
+    text-align: center;
+
+    font-size: 27px;
+
+    margin:
+        0 0 8px;
+
+    letter-spacing:
+        -.7px;
+}
+
+.subtitle {
+
+    text-align: center;
+
+    color: var(--muted);
+
+    font-size: 12px;
+
+    margin-bottom: 30px;
+}
+
+
+/* FORM */
+
+.form-group {
+
+    margin-bottom: 17px;
+}
+
+label {
+
+    display: block;
+
+    margin-bottom: 7px;
+
+    color: #a9b5c6;
+
+    font-size: 11px;
+
+    font-weight: 650;
+}
+
+.input {
+
+    width: 100%;
+
+    height: 48px;
+
+    border:
+        1px solid
+        rgba(255,255,255,.07);
+
+    border-radius: 12px;
+
+    outline: none;
+
+    background:
+        rgba(255,255,255,.045);
+
+    color: white;
+
+    padding:
+        0 14px;
+
+    font-size: 13px;
+
+    transition:
+        border .25s ease,
+        background .25s ease,
+        box-shadow .25s ease,
+        transform .2s ease;
+}
+
+.input:hover {
+
+    background:
+        rgba(255,255,255,.06);
+}
+
+.input:focus {
+
+    border-color:
+        rgba(59,130,246,.65);
+
+    background:
+        rgba(59,130,246,.06);
+
+    box-shadow:
+        0 0 0 4px
+        rgba(59,130,246,.08);
+
+    transform:
+        translateY(-1px);
+}
+
+.input::placeholder {
+    color: #59677b;
+}
+
+
+/* BUTTON */
+
+.button {
+
+    width: 100%;
+
+    height: 49px;
+
+    margin-top: 8px;
+
+    border: 0;
+
+    border-radius: 12px;
+
+    color: white;
+
+    font-size: 13px;
+
+    font-weight: 700;
+
+    cursor: pointer;
+
+    background:
+        linear-gradient(
+            135deg,
+            #3b82f6,
+            #2563eb
+        );
+
+    box-shadow:
+        0 10px 30px
+        rgba(37,99,235,.25);
+
+    transition:
+        transform .2s ease,
+        box-shadow .2s ease,
+        filter .2s ease;
+}
+
+.button:hover {
+
+    transform:
+        translateY(-2px);
+
+    box-shadow:
+        0 15px 35px
+        rgba(37,99,235,.38);
+
+    filter:
+        brightness(1.07);
+}
+
+.button:active {
+
+    transform:
+        scale(.97);
+}
+
+
+/* LOADING */
+
+.button.loading {
+
+    pointer-events: none;
+
+    opacity: .8;
+}
+
+.button.loading::after {
+
+    content: "";
+
+    display: inline-block;
+
+    width: 14px;
+    height: 14px;
+
+    margin-left: 8px;
+
+    vertical-align: -2px;
+
+    border:
+        2px solid
+        rgba(255,255,255,.35);
+
+    border-top-color:
+        white;
+
+    border-radius: 50%;
+
+    animation:
+        spin .7s linear infinite;
+}
+
+@keyframes spin {
+
+    to {
+        transform:
+            rotate(360deg);
+    }
+}
+
+
+/* FOOTER */
+
+.footer {
+
+    margin-top: 23px;
+
+    text-align: center;
+
+    color: var(--muted);
+
+    font-size: 11px;
+}
+
+.footer a {
+
+    color:
+        #60a5fa;
+
+    text-decoration: none;
+
+    font-weight: 650;
+
+    transition:
+        color .2s ease;
+}
+
+.footer a:hover {
+
+    color:
+        #93c5fd;
+}
+
+
+/* ERROR */
+
+.error {
+
+    padding:
+        10px 12px;
+
+    margin-bottom:
+        17px;
+
+    border-radius:
+        10px;
+
+    color:
+        #fca5a5;
+
+    background:
+        rgba(239,68,68,.08);
+
+    border:
+        1px solid
+        rgba(239,68,68,.15);
+
+    font-size:
+        11px;
+
+    animation:
+        errorIn .3s ease;
+}
+
+@keyframes errorIn {
+
+    from {
+        opacity: 0;
+        transform:
+            translateY(-5px);
+    }
+
+    to {
+        opacity: 1;
+        transform:
+            translateY(0);
+    }
+}
+
+
+/* MOBILE */
+
+@media(max-width: 480px) {
+
+    .container {
+        padding: 15px;
+    }
+
+    .card {
+        padding: 28px 22px;
+        border-radius: 21px;
+    }
+
+    h1 {
+        font-size: 24px;
+    }
+}
+
+</style>
 </head>
+
 
 <body>
 
-<div class="box">
 
-    <h1>💬 SliqChat</h1>
+<div class="background">
 
-    <h2>Login</h2>
-
-    {% if error %}
-        <p class="error">{{ error }}</p>
-    {% endif %}
-
-    <form method="POST">
-
-        <input
-            type="text"
-            name="username"
-            placeholder="Benutzername"
-            required
-        >
-
-        <input
-            type="password"
-            name="password"
-            placeholder="Passwort"
-            required
-        >
-
-        <button type="submit">
-            Einloggen
-        </button>
-
-    </form>
-
-    <p class="center">
-        Noch keinen Account?
-        <a href="/register">Registrieren</a>
-    </p>
+    <div class="glow one"></div>
+    <div class="glow two"></div>
 
 </div>
+
+
+<div class="particles">
+
+    <span
+        class="particle"
+        style="left:8%;animation-duration:11s;"
+    ></span>
+
+    <span
+        class="particle"
+        style="left:20%;animation-duration:15s;"
+    ></span>
+
+    <span
+        class="particle"
+        style="left:35%;animation-duration:12s;"
+    ></span>
+
+    <span
+        class="particle"
+        style="left:52%;animation-duration:17s;"
+    ></span>
+
+    <span
+        class="particle"
+        style="left:67%;animation-duration:13s;"
+    ></span>
+
+    <span
+        class="particle"
+        style="left:81%;animation-duration:16s;"
+    ></span>
+
+    <span
+        class="particle"
+        style="left:94%;animation-duration:10s;"
+    ></span>
+
+</div>
+
+
+<div class="container">
+
+
+    <div class="card">
+
+
+        <div class="logo">
+
+            <div class="logo-icon"></div>
+
+        </div>
+
+
+        <h1>
+            Willkommen zurück
+        </h1>
+
+
+        <div class="subtitle">
+            Melde dich bei SliqChat an
+        </div>
+
+
+        {% if error %}
+
+        <div class="error">
+            {{ error }}
+        </div>
+
+        {% endif %}
+
+
+        <form
+            method="POST"
+            onsubmit="startLoading()"
+        >
+
+
+            <div class="form-group">
+
+                <label>
+                    Benutzername
+                </label>
+
+                <input
+                    class="input"
+                    type="text"
+                    name="username"
+                    placeholder="Dein Benutzername"
+                    autocomplete="username"
+                    required
+                    autofocus
+                >
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label>
+                    Passwort
+                </label>
+
+                <input
+                    class="input"
+                    type="password"
+                    name="password"
+                    placeholder="Dein Passwort"
+                    autocomplete="current-password"
+                    required
+                >
+
+            </div>
+
+
+            <button
+                class="button"
+                id="loginButton"
+                type="submit"
+            >
+                Anmelden
+            </button>
+
+
+        </form>
+
+
+        <div class="footer">
+
+            Noch kein Konto?
+
+            <a href="/register">
+                Konto erstellen
+            </a>
+
+        </div>
+
+
+    </div>
+
+
+</div>
+
+
+<script>
+
+function startLoading() {
+
+    const button =
+        document.getElementById(
+            "loginButton"
+        );
+
+    if (!button) return;
+
+    button.classList.add(
+        "loading"
+    );
+
+    button.innerHTML =
+        "Anmelden";
+}
+
+
+/* INPUT ANIMATION */
+
+document
+    .querySelectorAll(".input")
+    .forEach(
+        input => {
+
+            input.addEventListener(
+                "focus",
+                () => {
+
+                    input.parentElement
+                        .style.transform =
+                        "translateY(-1px)";
+
+                }
+            );
+
+            input.addEventListener(
+                "blur",
+                () => {
+
+                    input.parentElement
+                        .style.transform =
+                        "translateY(0)";
+
+                }
+            );
+
+        }
+    );
+
+</script>
+
 
 </body>
 </html>
