@@ -1019,16 +1019,31 @@ def create_group():
         )
     )
 
+    # Nur Personen hinzuf?gen, mit denen der Ersteller
+    # bereits einen privaten Chat erstellt hat.
     for member_id in cleaned:
 
         exists = db.execute(
             """
-            SELECT id
-            FROM users
-            WHERE id = ?
+            SELECT u.id
+            FROM users u
+            WHERE u.id = ?
+            AND EXISTS (
+                SELECT 1
+                FROM conversations c
+                JOIN conversation_members cm1
+                    ON cm1.conversation_id = c.id
+                JOIN conversation_members cm2
+                    ON cm2.conversation_id = c.id
+                WHERE c.is_group = 0
+                AND cm1.user_id = ?
+                AND cm2.user_id = ?
+            )
             """,
             (
                 member_id,
+                user["id"],
+                member_id
             )
         ).fetchone()
 
@@ -1055,6 +1070,52 @@ def create_group():
             "id": conversation_id
         }
     )
+
+
+# =========================================================
+# GROUP ELIGIBLE USERS
+# =========================================================
+
+@app.route("/api/group-eligible-users")
+def group_eligible_users():
+
+    user = current_user()
+
+    if not user:
+        return jsonify({"error": "not_logged_in"}), 401
+
+    db = get_db()
+
+    rows = db.execute(
+        """
+        SELECT DISTINCT u.id, u.username
+        FROM users u
+        JOIN conversation_members cm2
+            ON cm2.user_id = u.id
+        JOIN conversations c
+            ON c.id = cm2.conversation_id
+        JOIN conversation_members cm1
+            ON cm1.conversation_id = c.id
+        WHERE c.is_group = 0
+        AND cm1.user_id = ?
+        AND cm2.user_id != ?
+        ORDER BY u.username
+        """,
+        (
+            user["id"],
+            user["id"]
+        )
+    ).fetchall()
+
+    db.close()
+
+    return jsonify([
+        {
+            "id": row["id"],
+            "username": row["username"]
+        }
+        for row in rows
+    ])
 
 
 # =========================================================
