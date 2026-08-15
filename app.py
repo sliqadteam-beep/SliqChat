@@ -183,7 +183,7 @@ def register():
             error = "Das Passwort muss mindestens 8 Zeichen haben."
 
         elif password != password2:
-            error = "Die Passwörter stimmen nicht überein."
+            error = "Die Passwoerter stimmen nicht ueberein."
 
         else:
             db = get_db()
