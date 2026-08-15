@@ -1,0 +1,118 @@
+﻿<div id="install-container">
+    <button id="install-button" type="button">
+        <span class="install-icon">↓</span>
+        <span>SliqChat installieren</span>
+    </button>
+</div>
+
+<style>
+#install-container {
+    position: fixed;
+    right: 22px;
+    bottom: 78px;
+    z-index: 9998;
+}
+
+#install-button {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+
+    padding: 12px 17px;
+
+    border: 1px solid rgba(96,165,250,.25);
+    border-radius: 13px;
+
+    background: rgba(13,21,36,.92);
+    color: #e5edf8;
+
+    backdrop-filter: blur(20px);
+
+    box-shadow: 0 12px 35px rgba(0,0,0,.35);
+
+    font-size: 12px;
+    font-weight: 600;
+
+    cursor: pointer;
+
+    transition:
+        transform .2s ease,
+        background .2s ease,
+        border-color .2s ease;
+}
+
+#install-button:hover {
+    transform: translateY(-3px);
+    background: rgba(30,64,175,.9);
+    border-color: rgba(96,165,250,.6);
+}
+
+.install-icon {
+    width: 24px;
+    height: 24px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 7px;
+
+    background: #2563eb;
+    color: white;
+
+    font-size: 18px;
+
+    animation: installFloat 2s infinite ease-in-out;
+}
+
+@keyframes installFloat {
+    0%,100% {
+        transform: translateY(0);
+    }
+
+    50% {
+        transform: translateY(3px);
+    }
+}
+
+@media(max-width:600px) {
+    #install-container {
+        right: 14px;
+        bottom: 68px;
+    }
+}
+</style>
+
+<script>
+let deferredPrompt = null;
+
+window.addEventListener("beforeinstallprompt", event => {
+    event.preventDefault();
+
+    deferredPrompt = event;
+
+    document.getElementById("install-container").style.display = "block";
+});
+
+document.getElementById("install-button").addEventListener("click", async () => {
+
+    if (!deferredPrompt) {
+        alert("SliqChat kann auf diesem Gerät bereits installiert sein oder dein Browser unterstützt die Installation nicht.");
+        return;
+    }
+
+    deferredPrompt.prompt();
+
+    const result = await deferredPrompt.userChoice;
+
+    if (result.outcome === "accepted") {
+        document.getElementById("install-container").style.display = "none";
+    }
+
+    deferredPrompt = null;
+});
+
+window.addEventListener("appinstalled", () => {
+    document.getElementById("install-container").style.display = "none";
+});
+</script>

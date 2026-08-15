@@ -1,0 +1,17 @@
+﻿{
+  "name": "SliqChat",
+  "short_name": "SliqChat",
+  "description": "Private chats and groups with SliqChat.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#07111f",
+  "theme_color": "#2563eb",
+  "orientation": "portrait-primary",
+  "icons": [
+    {
+      "src": "/static/sliqchat-logo.svg",
+      "sizes": "512x512",
+      "type": "image/svg+xml"
+    }
+  ]
+}
