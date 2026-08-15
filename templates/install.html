@@ -1,84 +1,310 @@
 ﻿<div id="install-container">
     <button id="install-button" type="button">
-        <span class="install-icon">↓</span>
-        <span>SliqChat installieren</span>
+        <span class="install-icon">
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M12 3v11"></path>
+                <path d="m7 10 5 5 5-5"></path>
+                <path d="M5 20h14"></path>
+            </svg>
+        </span>
+
+        <span class="install-text">
+            <strong>SliqChat installieren</strong>
+            <small>App installieren</small>
+        </span>
+
+        <span class="install-arrow">›</span>
     </button>
 </div>
 
 <style>
 #install-container {
     position: fixed;
-    right: 22px;
+    right: 24px;
     bottom: 78px;
     z-index: 9998;
+
+    opacity: 0;
+    transform: translateY(12px) scale(.96);
+
+    pointer-events: none;
+
+    transition:
+        opacity .3s ease,
+        transform .3s ease;
 }
 
+#install-container.visible {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+    pointer-events: auto;
+}
+
+/* BUTTON */
+
 #install-button {
+    position: relative;
+
     display: flex;
     align-items: center;
-    gap: 9px;
 
-    padding: 12px 17px;
+    gap: 11px;
 
-    border: 1px solid rgba(96,165,250,.25);
-    border-radius: 13px;
+    min-width: 218px;
 
-    background: rgba(13,21,36,.92);
-    color: #e5edf8;
+    padding: 10px 12px 10px 10px;
 
-    backdrop-filter: blur(20px);
+    border: 1px solid rgba(96, 165, 250, .22);
+    border-radius: 16px;
 
-    box-shadow: 0 12px 35px rgba(0,0,0,.35);
+    background:
+        linear-gradient(
+            135deg,
+            rgba(18, 28, 48, .97),
+            rgba(10, 17, 30, .97)
+        );
 
-    font-size: 12px;
-    font-weight: 600;
+    color: #fff;
+
+    box-shadow:
+        0 14px 40px rgba(0, 0, 0, .40),
+        0 0 0 1px rgba(255,255,255,.02) inset;
+
+    backdrop-filter: blur(22px);
+    -webkit-backdrop-filter: blur(22px);
 
     cursor: pointer;
 
+    font-family: inherit;
+
     transition:
-        transform .2s ease,
-        background .2s ease,
-        border-color .2s ease;
+        transform .22s ease,
+        border-color .22s ease,
+        box-shadow .22s ease,
+        background .22s ease;
 }
+
+/* subtle blue glow */
+
+#install-button::before {
+    content: "";
+
+    position: absolute;
+
+    inset: -1px;
+
+    border-radius: inherit;
+
+    background: linear-gradient(
+        135deg,
+        rgba(59,130,246,.18),
+        transparent 45%,
+        rgba(37,99,235,.08)
+    );
+
+    pointer-events: none;
+}
+
+/* HOVER */
 
 #install-button:hover {
     transform: translateY(-3px);
-    background: rgba(30,64,175,.9);
-    border-color: rgba(96,165,250,.6);
+
+    border-color: rgba(96,165,250,.55);
+
+    background:
+        linear-gradient(
+            135deg,
+            rgba(24, 40, 68, .98),
+            rgba(12, 22, 40, .98)
+        );
+
+    box-shadow:
+        0 18px 45px rgba(0,0,0,.45),
+        0 0 25px rgba(37,99,235,.16);
 }
 
+#install-button:active {
+    transform: translateY(-1px) scale(.98);
+}
+
+/* ICON */
+
 .install-icon {
-    width: 24px;
-    height: 24px;
+    position: relative;
+
+    width: 38px;
+    height: 38px;
+
+    flex-shrink: 0;
 
     display: flex;
     align-items: center;
     justify-content: center;
 
-    border-radius: 7px;
+    border-radius: 11px;
 
-    background: #2563eb;
-    color: white;
+    background:
+        linear-gradient(
+            135deg,
+            #3b82f6,
+            #2563eb
+        );
 
-    font-size: 18px;
+    box-shadow:
+        0 7px 18px rgba(37,99,235,.35),
+        0 0 18px rgba(59,130,246,.12);
 
-    animation: installFloat 2s infinite ease-in-out;
+    transition:
+        transform .25s ease,
+        box-shadow .25s ease;
 }
 
-@keyframes installFloat {
-    0%,100% {
+#install-button:hover .install-icon {
+    transform: translateY(-2px);
+
+    box-shadow:
+        0 9px 22px rgba(37,99,235,.45),
+        0 0 25px rgba(59,130,246,.18);
+}
+
+/* SVG */
+
+.install-icon svg {
+    width: 21px;
+    height: 21px;
+
+    fill: none;
+
+    stroke: white;
+
+    stroke-width: 2;
+
+    stroke-linecap: round;
+    stroke-linejoin: round;
+
+    animation: downloadBounce 2.2s ease-in-out infinite;
+}
+
+@keyframes downloadBounce {
+    0%, 100% {
         transform: translateY(0);
     }
 
     50% {
-        transform: translateY(3px);
+        transform: translateY(2px);
     }
 }
 
-@media(max-width:600px) {
+/* TEXT */
+
+.install-text {
+    display: flex;
+    flex-direction: column;
+
+    align-items: flex-start;
+
+    gap: 2px;
+
+    flex: 1;
+
+    text-align: left;
+}
+
+.install-text strong {
+    color: #f8fafc;
+
+    font-size: 13px;
+
+    font-weight: 650;
+
+    line-height: 1.2;
+
+    white-space: nowrap;
+}
+
+.install-text small {
+    color: #8da0b8;
+
+    font-size: 10px;
+
+    font-weight: 500;
+
+    line-height: 1.2;
+
+    white-space: nowrap;
+}
+
+/* ARROW */
+
+.install-arrow {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 26px;
+    height: 26px;
+
+    border-radius: 8px;
+
+    color: #8fb9ff;
+
+    background: rgba(59,130,246,.08);
+
+    font-size: 22px;
+    line-height: 1;
+
+    transition:
+        transform .22s ease,
+        background .22s ease,
+        color .22s ease;
+}
+
+#install-button:hover .install-arrow {
+    transform: translateX(3px);
+
+    background: rgba(59,130,246,.16);
+
+    color: #fff;
+}
+
+/* MOBILE */
+
+@media (max-width: 600px) {
+
     #install-container {
         right: 14px;
         bottom: 68px;
+        left: 14px;
+    }
+
+    #install-button {
+        width: 100%;
+        min-width: 0;
+
+        padding: 10px;
+    }
+
+    .install-text strong {
+        font-size: 12px;
+    }
+
+    .install-text small {
+        font-size: 9px;
+    }
+}
+
+/* REDUCED MOTION */
+
+@media (prefers-reduced-motion: reduce) {
+
+    #install-button,
+    #install-container,
+    .install-icon,
+    .install-icon svg,
+    .install-arrow {
+        animation: none !important;
+        transition: none !important;
     }
 }
 </style>
@@ -86,18 +312,25 @@
 <script>
 let deferredPrompt = null;
 
+const installContainer = document.getElementById("install-container");
+const installButton = document.getElementById("install-button");
+
 window.addEventListener("beforeinstallprompt", event => {
     event.preventDefault();
 
     deferredPrompt = event;
 
-    document.getElementById("install-container").style.display = "block";
+    installContainer.classList.add("visible");
 });
 
-document.getElementById("install-button").addEventListener("click", async () => {
+installButton.addEventListener("click", async () => {
 
     if (!deferredPrompt) {
-        alert("SliqChat kann auf diesem Gerät bereits installiert sein oder dein Browser unterstützt die Installation nicht.");
+        alert(
+            "SliqChat kann auf diesem Gerät bereits installiert sein " +
+            "oder dein Browser unterstützt die Installation nicht."
+        );
+
         return;
     }
 
@@ -106,13 +339,13 @@ document.getElementById("install-button").addEventListener("click", async () => 
     const result = await deferredPrompt.userChoice;
 
     if (result.outcome === "accepted") {
-        document.getElementById("install-container").style.display = "none";
+        installContainer.classList.remove("visible");
     }
 
     deferredPrompt = null;
 });
 
 window.addEventListener("appinstalled", () => {
-    document.getElementById("install-container").style.display = "none";
+    installContainer.classList.remove("visible");
 });
 </script>
